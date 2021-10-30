@@ -29,6 +29,7 @@ namespace 产生式系统
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ColumnHeader columnHeader1;
             this.button1 = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.column1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -36,6 +37,8 @@ namespace 产生式系统
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.column0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // button1
@@ -51,8 +54,10 @@ namespace 产生式系统
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.column0,
             this.column1,
-            this.column2});
+            this.column2,
+            columnHeader1});
             this.listView1.Font = new System.Drawing.Font("宋体", 10F);
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -105,6 +110,10 @@ namespace 产生式系统
             this.button3.Text = "修改规则库";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // column0
+            // 
+            this.column0.Text = "编号";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -126,12 +135,13 @@ namespace 产生式系统
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListView listView1;
+        public System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ColumnHeader column1;
         public System.Windows.Forms.ColumnHeader column2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        public System.Windows.Forms.ColumnHeader column0;
     }
 }
 
