@@ -29,104 +29,136 @@ namespace 产生式系统
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ColumnHeader columnHeader1;
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.button1 = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.column1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.column2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.column0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.rule_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rule_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rule_Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rule_Column3 = new System.Windows.Forms.DataGridViewButtonColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(544, 106);
+            this.button1.Location = new System.Drawing.Point(509, 64);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(131, 42);
+            this.button1.Size = new System.Drawing.Size(120, 50);
             this.button1.TabIndex = 0;
             this.button1.Text = "正向推理";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listView1
-            // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.column0,
-            this.column1,
-            this.column2,
-            columnHeader1});
-            this.listView1.Font = new System.Drawing.Font("宋体", 10F);
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(46, 77);
-            this.listView1.MaximumSize = new System.Drawing.Size(406, 360);
-            this.listView1.MinimumSize = new System.Drawing.Size(406, 360);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(406, 360);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // column1
-            // 
-            this.column1.Text = "前件";
-            this.column1.Width = 200;
-            // 
-            // column2
-            // 
-            this.column2.Text = "后件";
-            this.column2.Width = 200;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(75, 41);
+            this.label1.Location = new System.Drawing.Point(69, 33);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 20);
+            this.label1.Size = new System.Drawing.Size(59, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "规则库";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(544, 199);
+            this.button2.Location = new System.Drawing.Point(509, 188);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(131, 42);
+            this.button2.Size = new System.Drawing.Size(120, 50);
             this.button2.TabIndex = 4;
             this.button2.Text = "反向推理";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(544, 298);
+            this.button3.Location = new System.Drawing.Point(509, 311);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(131, 42);
+            this.button3.Size = new System.Drawing.Size(120, 50);
             this.button3.TabIndex = 5;
-            this.button3.Text = "修改规则库";
+            this.button3.Text = "添加规则";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // column0
+            // dataGridView1
             // 
-            this.column0.Text = "编号";
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.rule_Column0,
+            this.rule_Column1,
+            this.rule_Column2,
+            this.rule_Column3});
+            this.dataGridView1.Location = new System.Drawing.Point(33, 52);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(431, 339);
+            this.dataGridView1.TabIndex = 6;
+            // 
+            // rule_Column0
+            // 
+            this.rule_Column0.DataPropertyName = "规则编号";
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.rule_Column0.DefaultCellStyle = dataGridViewCellStyle10;
+            this.rule_Column0.HeaderText = "规则编号";
+            this.rule_Column0.Name = "rule_Column0";
+            this.rule_Column0.ReadOnly = true;
+            this.rule_Column0.Width = 70;
+            // 
+            // rule_Column1
+            // 
+            this.rule_Column1.DataPropertyName = "规则前件";
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.rule_Column1.DefaultCellStyle = dataGridViewCellStyle11;
+            this.rule_Column1.HeaderText = "规则前件";
+            this.rule_Column1.Name = "rule_Column1";
+            this.rule_Column1.ReadOnly = true;
+            this.rule_Column1.Width = 180;
+            // 
+            // rule_Column2
+            // 
+            this.rule_Column2.DataPropertyName = "规则后件";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.rule_Column2.DefaultCellStyle = dataGridViewCellStyle12;
+            this.rule_Column2.HeaderText = "规则后件";
+            this.rule_Column2.Name = "rule_Column2";
+            this.rule_Column2.ReadOnly = true;
+            this.rule_Column2.Width = 120;
+            // 
+            // rule_Column3
+            // 
+            this.rule_Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.rule_Column3.HeaderText = "";
+            this.rule_Column3.Name = "rule_Column3";
+            this.rule_Column3.ReadOnly = true;
+            this.rule_Column3.Text = "删除";
+            this.rule_Column3.UseColumnTextForButtonValue = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 450);
+            this.ClientSize = new System.Drawing.Size(668, 419);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "产生式系统";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,13 +167,14 @@ namespace 产生式系统
         #endregion
 
         private System.Windows.Forms.Button button1;
-        public System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.ColumnHeader column1;
-        public System.Windows.Forms.ColumnHeader column2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        public System.Windows.Forms.ColumnHeader column0;
+        public System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rule_Column0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rule_Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rule_Column2;
+        private System.Windows.Forms.DataGridViewButtonColumn rule_Column3;
     }
 }
 

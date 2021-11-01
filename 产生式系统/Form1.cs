@@ -37,7 +37,14 @@ namespace 产生式系统
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Form2 F = new Form2();
+            F.ShowDialog();
+        }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Add_rule f = new Add_rule();
+            f.ShowDialog();
         }
     }
 }
