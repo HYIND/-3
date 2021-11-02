@@ -97,5 +97,17 @@ namespace 产生式系统
         {
             this.Close();
         }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView2.Columns[e.ColumnIndex] == Selected_Column2)
+                dataGridView2.Rows.RemoveAt(e.RowIndex);
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView3.Columns[e.ColumnIndex] == Goal_Column2)
+                dataGridView3.Rows.RemoveAt(e.RowIndex);
+        }
     }
 }

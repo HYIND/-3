@@ -46,5 +46,32 @@ namespace 产生式系统
             Add_rule f = new Add_rule();
             f.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("是否确定退出程序?", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                Application.Exit();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+            if (dataGridView1.Columns[e.ColumnIndex] == rule_Column3)
+                if (MessageBox.Show("是否确定要删除这条规则", "确认！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    int i = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[1].Value);
+                    dataGridView1.Rows.RemoveAt(e.RowIndex);
+                    for (rulenode rnode_temp = method.rhead; rnode_temp.next != null; rnode_temp = rnode_temp.next)
+                    {
+                        if (rnode_temp.next.rulecount == i)
+                        {
+                            rnode_temp.next = rnode_temp.next.next;
+                            break;
+                        }
+                    }
+                    method.RewriteFile();
+                }
+        }
     }
 }

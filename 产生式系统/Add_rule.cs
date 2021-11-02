@@ -27,7 +27,11 @@ namespace 产生式系统
             string t1 = textBox1.Text;
             string t2 = textBox2.Text;
 
-            method.Addrule(t1, t2);
+            if (method.Addrule(t1, t2))
+            {
+                MessageBox.Show("添加成功！");
+                    this.Close();
+            }
         }
     }
 }

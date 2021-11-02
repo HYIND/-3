@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-public class eventnode  //表示单个事件，可能是规则中的前件，也可能是后件
+public class eventnode  //表示单个命题，可能是规则中的前件，也可能是后件
 {
-    public string name;        //事件名
-    public int eventcount;     //该事件的编号
-    public eventnode next = null;//下一个事件
+    public string name;        //命题名
+    public int eventcount;     //该命题的编号
+    public eventnode next = null;//下一个命题
 }
 
 
 public class autenode   //前件节点，表示规则中的前件中的一项
 {
-    public string name = null; //事件名
-    public int eventcount;     //该事实的编号
-    public bool open = false;  //表示该事实是否被推出，推出则为true
+    public string name = null; //命题名
+    public int eventcount;     //该命题的编号
+    public bool open = false;  //表示该命题是否被推出，推出则为true
     public autenode next = null;      //同规则中前件的下一项
 }
 
 public class rulenode   //单条规则
 {
     public string name = null;      //后件名
-    public int eventcount;          //该事实的编号
+    public int eventcount;          //该命题的编号
     public int rulecount;           //规则编号
     public rulenode next = null;    //下一条规则
     public autenode first = new autenode();     //该规则中的前件链表表头
@@ -37,20 +37,41 @@ namespace 产生式系统
     public class method
     {
         public static eventnode ehead = new eventnode();
+        public static eventnode etail = ehead;
         public static rulenode rhead = new rulenode();
         public static rulenode rtail = rhead;
-        public static int eventcount = 1;
-        public static int rulecount = 1;
+        public static int eventcount = 0;
+        public static int rulecount = 0;
         public static DataTable dt = new DataTable();
+
+        public static eventnode isevent_exist(string t)       
+            //判断命题是否已经存在，是则返回其在命题表中的位置，否则返回null
+        {
+            bool signal_exist1 = false;
+            eventnode enode_temp = ehead;
+            while (enode_temp.next != null)
+            {
+                enode_temp = enode_temp.next;
+                if (enode_temp.name == t)
+                {
+                    signal_exist1 = true;
+                    break;
+                }
+            }
+            if (signal_exist1)
+                return enode_temp;
+            else return null;
+        }
 
         public static void Init()
         {
             StreamReader sr = new StreamReader("rule_group.txt", Encoding.UTF8);
-            dt.Columns.Add("规则编号");
-            dt.Columns.Add("规则前件");
-            dt.Columns.Add("规则后件");
+            dt.Columns.Add("规则编号", typeof(int));
+            dt.Columns.Add("规则前件", typeof(string));
+            dt.Columns.Add("规则后件", typeof(string));
             while (!sr.EndOfStream)
             {
+                rulecount++;
                 rtail.next = new rulenode();
                 rtail = rtail.next;
                 DataRow row = dt.NewRow();
@@ -78,13 +99,14 @@ namespace 产生式系统
                                 break;
                             }
                         }
-                        if (!signal1)     //新建事件节点
+                        if (!signal1)     //新建命题节点
                         {
+                            eventcount++;
                             enode_temp1.next = new eventnode();
                             enode_temp1 = enode_temp1.next;
                             enode_temp1.name = t;
                             enode_temp1.eventcount = eventcount;
-                            eventcount++;
+                            etail = enode_temp1;
                         }
 
                         autenode anode_temp = rtail.first;
@@ -123,38 +145,39 @@ namespace 产生式系统
                 }
                 if (!signal2)     //新建事件节点
                 {
+                    eventcount++;
                     enode_temp2.next = new eventnode();
                     enode_temp2 = enode_temp2.next;
                     enode_temp2.name = t;
                     enode_temp2.eventcount = eventcount;
-                    eventcount++;
+                    etail = enode_temp2;
                 }
                 rtail.name = t;
                 rtail.eventcount = enode_temp2.eventcount;
                 rtail.rulecount = rulecount;
-                rulecount++;
             }
+            sr.Close();
+            sr.Dispose();
             Form1.form1.dataGridView1.DataSource = dt;
         }
 
-        public static void Addrule(string t1, string t2)
+        public static bool Addrule(string t1, string t2)        //添加规则,成功添加返回true
         {
             int eventcount_temp = 0;
-            bool signal_exist1 = false;
-            for (eventnode enode_temp = ehead.next; enode_temp != null; enode_temp = enode_temp.next)
+            eventnode enode_temp = isevent_exist(t2);
+            if (enode_temp == null)
             {
-                if (enode_temp.name == t2)
+                if (MessageBox.Show("后件\"" + t2 + "\"不在命题库中，是否要添加新的命题?", "出了一点小问题！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    signal_exist1 = true;
-                    eventcount_temp = enode_temp.eventcount;
-                    break;
+                    eventcount++;
+                    etail.next = new eventnode();
+                    etail = etail.next;
+                    etail.name = t2;
+                    etail.eventcount = eventcount;
                 }
+                else return false;
             }
-            if (!signal_exist1)
-            {
-                MessageBox.Show("填写信息有误，请检查后件是否在事实表中", "错误！");
-                return;
-            }
+            else eventcount_temp = enode_temp.eventcount;
 
             autenode ahead_temp = new autenode();
             autenode anode_temp = ahead_temp;
@@ -169,60 +192,104 @@ namespace 产生式系统
                 else
                 {
                     t = t1.Substring(head, count - head - 1);
-                    bool signal_exist2 = false;
-                    for (eventnode enode_temp = ehead.next; enode_temp != null; enode_temp = enode_temp.next)
+                    enode_temp = isevent_exist(t);
+                    if (enode_temp == null)
                     {
-                        if (enode_temp.name == t)
+                        if (MessageBox.Show("前件\"" + t + "\"不在命题库中，是否要添加新的命题?", "出了一点小问题！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                         {
-                            signal_exist2 = true;
-                            anode_temp.next = new autenode();
-                            anode_temp = anode_temp.next;
-                            anode_temp.name = t;
-                            anode_temp.eventcount = enode_temp.eventcount;
-                            break;
+                            eventcount++;
+                            etail.next = new eventnode();
+                            etail = etail.next;
+                            etail.name = t;
+                            etail.eventcount = eventcount;
                         }
+                        else return false;
                     }
-                    if (!signal_exist2)
-                    {
-                        MessageBox.Show("填写信息有误，请检查前件\"" + t + "\"是否在事实表中", "错误！");
-                        return;
+                    else{
+                        anode_temp.next = new autenode();
+                        anode_temp = anode_temp.next;
+                        anode_temp.name = t;
+                        anode_temp.eventcount = enode_temp.eventcount;
                     }
                     head = count;
                     a = t1[count];
                 }
-
             }
             t = t1.Substring(head, count - head);
-            bool signal_exist3 = false;
-            for (eventnode enode_temp = ehead.next; enode_temp != null; enode_temp = enode_temp.next)
+            enode_temp = isevent_exist(t);
+            if (enode_temp == null)
             {
-                if (enode_temp.name == t)
+                if (MessageBox.Show("前件\"" + t + "\"不在命题库中，是否要添加新的命题?", "出了一点小问题！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    signal_exist3 = true;
-                    anode_temp.next = new autenode();
-                    anode_temp = anode_temp.next;
-                    anode_temp.name = t;
-                    anode_temp.eventcount = enode_temp.eventcount;
-                    break;
+                    eventcount++;
+                    etail.next = new eventnode();
+                    etail = etail.next;
+                    etail.name = t;
+                    etail.eventcount = eventcount;
                 }
+                else return false;
             }
-            if (!signal_exist3)
+            else
             {
-                MessageBox.Show("填写信息有误，请检查前件\"" + t + "\"是否在事实表中", "错误！");
-                return;
+                anode_temp.next = new autenode();
+                anode_temp = anode_temp.next;
+                anode_temp.name = t;
+                anode_temp.eventcount = enode_temp.eventcount;
             }
+            rulecount++;
             rtail.next = new rulenode();
             rtail = rtail.next;
             rtail.name = t2;
             rtail.eventcount = eventcount_temp;
             rtail.rulecount = rulecount;
             rtail.first = ahead_temp;
+
             DataRow row = dt.NewRow();
             row[0] = rulecount;
             row[1] = t1;
             row[2] = t2;
             dt.Rows.Add(row);
-            rulecount++;
+
+
+            //StreamReader sr = new StreamReader("rule_group.txt");
+            //string sr_temp = string.Empty;
+            //while (!sr.EndOfStream)
+            //    sr_temp = sr.ReadLine();
+            //sr.Close();
+
+            StreamWriter sw = new StreamWriter("rule_group.txt", true);
+            sw.WriteLine(t1 + "->" + t2);
+            sw.Flush();
+            sw.Close();
+            return true;
+        }
+
+        public static void RewriteFile()       //在删除规则后，对txt文件重写
+        {
+            StreamWriter sw = new StreamWriter("rule_group.txt", false);//saOrAp表示覆盖或者是追加  
+            rulenode rnode_temp = rhead;
+            while (rnode_temp.next != null)
+            {
+                string str = string.Empty;
+                rnode_temp = rnode_temp.next;
+                autenode anode_temp = rnode_temp.first;
+                while (anode_temp.next != null)
+                {
+                    anode_temp = anode_temp.next;
+                    if (anode_temp.next != null)
+                    {
+                        str = str + anode_temp.name + ",";
+                        continue;
+                    }
+                    else
+                    {
+                        str = str + anode_temp.name;
+                        break;
+                    }
+                }
+                sw.WriteLine(str + "->" + rnode_temp.name);
+            }
+            sw.Close();
         }
     }
 }
