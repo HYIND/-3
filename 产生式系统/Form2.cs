@@ -25,8 +25,8 @@ namespace 产生式系统
         private void Form2_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("事实编号");
-            dt.Columns.Add("事实");
+            dt.Columns.Add("命题编号");
+            dt.Columns.Add("命题");
             for (eventnode enode_temp = method.ehead;
                 enode_temp.next != null; enode_temp = enode_temp.next)
             {

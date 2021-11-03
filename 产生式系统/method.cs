@@ -19,7 +19,6 @@ public class autenode   //前件节点，表示规则中的前件中的一项
 {
     public string name = null; //命题名
     public int eventcount;     //该命题的编号
-    public bool open = false;  //表示该命题是否被推出，推出则为true
     public autenode next = null;      //同规则中前件的下一项
 }
 
@@ -28,6 +27,7 @@ public class rulenode   //单条规则
     public string name = null;      //后件名
     public int eventcount;          //该命题的编号
     public int rulecount;           //规则编号
+    public bool open=false;         //判断该规则是否已经使用
     public rulenode next = null;    //下一条规则
     public autenode first = new autenode();     //该规则中的前件链表表头
 }

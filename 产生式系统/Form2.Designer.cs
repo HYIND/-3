@@ -31,35 +31,34 @@ namespace 产生式系统
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.All_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.All_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.All_Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Selected_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selected_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Selected_Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.Goal_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Goal_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Goal_Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.Goal_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Goal_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Goal_Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Selected_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Selected_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Selected_Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.All_Column0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.All_Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.All_Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -102,39 +101,6 @@ namespace 产生式系统
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // All_Column0
-            // 
-            this.All_Column0.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.All_Column0.DataPropertyName = "事实编号";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.All_Column0.DefaultCellStyle = dataGridViewCellStyle2;
-            this.All_Column0.FillWeight = 91.37056F;
-            this.All_Column0.HeaderText = "事实编号";
-            this.All_Column0.MinimumWidth = 6;
-            this.All_Column0.Name = "All_Column0";
-            this.All_Column0.ReadOnly = true;
-            this.All_Column0.Width = 50;
-            // 
-            // All_Column1
-            // 
-            this.All_Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.All_Column1.DataPropertyName = "事实";
-            this.All_Column1.FillWeight = 108.6294F;
-            this.All_Column1.HeaderText = "事实";
-            this.All_Column1.MinimumWidth = 6;
-            this.All_Column1.Name = "All_Column1";
-            this.All_Column1.ReadOnly = true;
-            this.All_Column1.Width = 110;
-            // 
-            // All_Column2
-            // 
-            this.All_Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.All_Column2.FalseValue = "false";
-            this.All_Column2.HeaderText = "选择";
-            this.All_Column2.MinimumWidth = 6;
-            this.All_Column2.Name = "All_Column2";
-            this.All_Column2.TrueValue = "true";
-            // 
             // dataGridView2
             // 
             this.dataGridView2.AllowUserToAddRows = false;
@@ -172,45 +138,11 @@ namespace 产生式系统
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             // 
-            // Selected_Column0
-            // 
-            this.Selected_Column0.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Selected_Column0.DataPropertyName = "事实编号";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Selected_Column0.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Selected_Column0.FillWeight = 91.37056F;
-            this.Selected_Column0.HeaderText = "事实编号";
-            this.Selected_Column0.MinimumWidth = 6;
-            this.Selected_Column0.Name = "Selected_Column0";
-            this.Selected_Column0.ReadOnly = true;
-            this.Selected_Column0.Width = 70;
-            // 
-            // Selected_Column1
-            // 
-            this.Selected_Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Selected_Column1.DataPropertyName = "事实";
-            this.Selected_Column1.FillWeight = 108.6294F;
-            this.Selected_Column1.HeaderText = "事实";
-            this.Selected_Column1.MinimumWidth = 6;
-            this.Selected_Column1.Name = "Selected_Column1";
-            this.Selected_Column1.ReadOnly = true;
-            this.Selected_Column1.Width = 120;
-            // 
-            // Selected_Column2
-            // 
-            this.Selected_Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Selected_Column2.HeaderText = "";
-            this.Selected_Column2.MinimumWidth = 6;
-            this.Selected_Column2.Name = "Selected_Column2";
-            this.Selected_Column2.ReadOnly = true;
-            this.Selected_Column2.Text = "删除";
-            this.Selected_Column2.UseColumnTextForButtonValue = true;
-            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Webdings", 15F);
             this.button1.Location = new System.Drawing.Point(395, 120);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(152, 65);
             this.button1.TabIndex = 2;
@@ -222,7 +154,7 @@ namespace 产生式系统
             // 
             this.button2.Font = new System.Drawing.Font("Webdings", 15F);
             this.button2.Location = new System.Drawing.Point(395, 355);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(152, 65);
             this.button2.TabIndex = 3;
@@ -259,9 +191,9 @@ namespace 产生式系统
             this.label3.Location = new System.Drawing.Point(591, 279);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 22);
+            this.label3.Size = new System.Drawing.Size(125, 22);
             this.label3.TabIndex = 6;
-            this.label3.Text = "目标事实";
+            this.label3.Text = "可能的结果";
             // 
             // dataGridView3
             // 
@@ -308,14 +240,50 @@ namespace 产生式系统
             this.dataGridView3.TabIndex = 7;
             this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
             // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button4.Location = new System.Drawing.Point(748, 24);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(112, 29);
+            this.button4.TabIndex = 9;
+            this.button4.Text = "清空";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button5.Location = new System.Drawing.Point(748, 274);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(112, 26);
+            this.button5.TabIndex = 10;
+            this.button5.Text = "清空";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button6.Location = new System.Drawing.Point(713, 486);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(147, 54);
+            this.button6.TabIndex = 11;
+            this.button6.Text = "返回";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Goal_Column0
             // 
             this.Goal_Column0.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Goal_Column0.DataPropertyName = "事实编号";
+            this.Goal_Column0.DataPropertyName = "命题编号";
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.Goal_Column0.DefaultCellStyle = dataGridViewCellStyle8;
             this.Goal_Column0.FillWeight = 91.37056F;
-            this.Goal_Column0.HeaderText = "事实编号";
+            this.Goal_Column0.HeaderText = "命题编号";
             this.Goal_Column0.MinimumWidth = 6;
             this.Goal_Column0.Name = "Goal_Column0";
             this.Goal_Column0.ReadOnly = true;
@@ -324,9 +292,9 @@ namespace 产生式系统
             // Goal_Column1
             // 
             this.Goal_Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Goal_Column1.DataPropertyName = "事实";
+            this.Goal_Column1.DataPropertyName = "命题";
             this.Goal_Column1.FillWeight = 199.7137F;
-            this.Goal_Column1.HeaderText = "事实";
+            this.Goal_Column1.HeaderText = "命题";
             this.Goal_Column1.MinimumWidth = 6;
             this.Goal_Column1.Name = "Goal_Column1";
             this.Goal_Column1.ReadOnly = true;
@@ -343,52 +311,72 @@ namespace 产生式系统
             this.Goal_Column2.Text = "删除";
             this.Goal_Column2.UseColumnTextForButtonValue = true;
             // 
-            // button3
+            // Selected_Column0
             // 
-            this.button3.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button3.Location = new System.Drawing.Point(400, 246);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(147, 62);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "开始推理";
-            this.button3.UseVisualStyleBackColor = true;
+            this.Selected_Column0.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Selected_Column0.DataPropertyName = "命题编号";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Selected_Column0.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Selected_Column0.FillWeight = 91.37056F;
+            this.Selected_Column0.HeaderText = "命题编号";
+            this.Selected_Column0.MinimumWidth = 6;
+            this.Selected_Column0.Name = "Selected_Column0";
+            this.Selected_Column0.ReadOnly = true;
+            this.Selected_Column0.Width = 70;
             // 
-            // button4
+            // Selected_Column1
             // 
-            this.button4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button4.Location = new System.Drawing.Point(748, 24);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(112, 29);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "清空";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.Selected_Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Selected_Column1.DataPropertyName = "命题";
+            this.Selected_Column1.FillWeight = 108.6294F;
+            this.Selected_Column1.HeaderText = "命题";
+            this.Selected_Column1.MinimumWidth = 6;
+            this.Selected_Column1.Name = "Selected_Column1";
+            this.Selected_Column1.ReadOnly = true;
+            this.Selected_Column1.Width = 120;
             // 
-            // button5
+            // Selected_Column2
             // 
-            this.button5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button5.Location = new System.Drawing.Point(748, 274);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(112, 26);
-            this.button5.TabIndex = 10;
-            this.button5.Text = "清空";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.Selected_Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Selected_Column2.HeaderText = "";
+            this.Selected_Column2.MinimumWidth = 6;
+            this.Selected_Column2.Name = "Selected_Column2";
+            this.Selected_Column2.ReadOnly = true;
+            this.Selected_Column2.Text = "删除";
+            this.Selected_Column2.UseColumnTextForButtonValue = true;
             // 
-            // button6
+            // All_Column0
             // 
-            this.button6.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button6.Location = new System.Drawing.Point(713, 486);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(147, 54);
-            this.button6.TabIndex = 11;
-            this.button6.Text = "返回";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.All_Column0.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.All_Column0.DataPropertyName = "命题编号";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.All_Column0.DefaultCellStyle = dataGridViewCellStyle2;
+            this.All_Column0.FillWeight = 91.37056F;
+            this.All_Column0.HeaderText = "命题编号";
+            this.All_Column0.MinimumWidth = 6;
+            this.All_Column0.Name = "All_Column0";
+            this.All_Column0.ReadOnly = true;
+            this.All_Column0.Width = 50;
+            // 
+            // All_Column1
+            // 
+            this.All_Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.All_Column1.DataPropertyName = "命题";
+            this.All_Column1.FillWeight = 108.6294F;
+            this.All_Column1.HeaderText = "命题";
+            this.All_Column1.MinimumWidth = 6;
+            this.All_Column1.Name = "All_Column1";
+            this.All_Column1.ReadOnly = true;
+            this.All_Column1.Width = 110;
+            // 
+            // All_Column2
+            // 
+            this.All_Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.All_Column2.FalseValue = "false";
+            this.All_Column2.HeaderText = "选择";
+            this.All_Column2.MinimumWidth = 6;
+            this.All_Column2.Name = "All_Column2";
+            this.All_Column2.TrueValue = "true";
             // 
             // Form2
             // 
@@ -398,7 +386,6 @@ namespace 产生式系统
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -431,18 +418,17 @@ namespace 产生式系统
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn All_Column0;
-        private System.Windows.Forms.DataGridViewTextBoxColumn All_Column1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn All_Column2;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Selected_Column0;
         private System.Windows.Forms.DataGridViewTextBoxColumn Selected_Column1;
         private System.Windows.Forms.DataGridViewButtonColumn Selected_Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Goal_Column0;
         private System.Windows.Forms.DataGridViewTextBoxColumn Goal_Column1;
         private System.Windows.Forms.DataGridViewButtonColumn Goal_Column2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn All_Column0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn All_Column1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn All_Column2;
     }
 }
