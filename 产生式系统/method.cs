@@ -188,6 +188,7 @@ namespace 产生式系统
             bool terminal = false;
             int eventcount_temp = 0;
             eventnode enode_temp = isevent_exist(t2);
+
             if (enode_temp == null)
             {
                 if (MessageBox.Show("后件\"" + t2 + "\"不在命题库中，是否要添加新的命题?", "出了一点小问题！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
@@ -205,7 +206,12 @@ namespace 产生式系统
                 }
                 else return false;
             }
-            else eventcount_temp = enode_temp.eventcount;
+            else
+            {
+                terminal = enode_temp.terminal_node;
+                eventcount_temp = enode_temp.eventcount;
+            }
+
 
             autenode ahead_temp = new autenode();
             autenode anode_temp = ahead_temp;
@@ -273,8 +279,7 @@ namespace 产生式系统
             rtail.eventcount = eventcount_temp;
             rtail.rulecount = rulecount;
             rtail.first = ahead_temp;
-            if (terminal)
-                rtail.terminal = true;
+            rtail.terminal = terminal;
 
             DataRow row = dt.NewRow();
             row[0] = rulecount;
@@ -290,7 +295,10 @@ namespace 产生式系统
             //sr.Close();
 
             StreamWriter sw = new StreamWriter("rule_group.txt", true);
-            sw.WriteLine(t1 + "->" + t2);
+            if (!terminal)
+                sw.WriteLine(t1 + "->" + t2);
+            else sw.WriteLine("?" + t1 + "->" + t2);
+
             sw.Flush();
             sw.Close();
             return true;
@@ -332,9 +340,9 @@ namespace 产生式系统
         {
             Reasoning R_method = new Reasoning();
             eventnode event_selected_tail = R_method.get_selected(event_selected_head);
-            for(eventnode temp=event_selected_head.next;temp!=null;temp=temp.next)
+            for (eventnode temp = event_selected_head.next; temp != null; temp = temp.next)
             {
-                if(temp.terminal_node)
+                if (temp.terminal_node)
                 {
                     Form2.form2.textBox1.Text = temp.name;
                     return;
