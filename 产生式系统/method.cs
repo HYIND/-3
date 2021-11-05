@@ -11,6 +11,7 @@ public class eventnode  //表示单个命题，可能是规则中的前件，也
 {
     public string name;        //命题名
     public int eventcount;     //该命题的编号
+    public bool terminal_node = false; //判断是否是终点节点(即该节点已经没有后件)
     public eventnode next = null;//下一个命题
 }
 
@@ -25,11 +26,18 @@ public class autenode   //前件节点，表示规则中的前件中的一项
 public class rulenode   //单条规则
 {
     public string name = null;      //后件名
-    public int eventcount;          //该命题的编号
+    public int eventcount;          //该后件命题的编号
     public int rulecount;           //规则编号
-    public bool open=false;         //判断该规则是否已经使用
+    public bool terminal = false;
     public rulenode next = null;    //下一条规则
     public autenode first = new autenode();     //该规则中的前件链表表头
+}
+
+public class rule_cnode
+//推理中用到的，c指copy,是对源规则的位置进行拷贝，据此建立规则库的open表/close表
+{
+    public rulenode rule_source;        //该规则的源，用来获取规则数据
+    public rule_cnode next = null;      //该规则库的open表/close表的下一节点
 }
 
 namespace 产生式系统
@@ -44,8 +52,8 @@ namespace 产生式系统
         public static int rulecount = 0;
         public static DataTable dt = new DataTable();
 
-        public static eventnode isevent_exist(string t)       
-            //判断命题是否已经存在，是则返回其在命题表中的位置，否则返回null
+        public static eventnode isevent_exist(string t)
+        //判断命题是否已经存在，是则返回其在命题表中的位置，否则返回null
         {
             bool signal_exist1 = false;
             eventnode enode_temp = ehead;
@@ -78,8 +86,15 @@ namespace 产生式系统
                 row[0] = rulecount;
                 string s = sr.ReadLine();
                 int count = 0;
-                int head = 0, length = s.Length;
                 char a = s[count];
+                bool terminal = false;
+                if (a == '?')
+                {
+                    terminal = true;
+                    rtail.terminal = true;
+                    count++;
+                }
+                int head = count, length = s.Length;
                 string t = null;
                 while (++count != length)
                 {
@@ -119,7 +134,10 @@ namespace 产生式系统
 
                         if (a == '-')
                         {
-                            string aute_temp = s.Substring(0, count - 1);
+                            string aute_temp = string.Empty;
+                            if (!terminal)
+                                aute_temp = s.Substring(0, count - 1);
+                            else aute_temp = s.Substring(1, count - 2);
                             row[1] = aute_temp;
                             count++;
                         }
@@ -139,6 +157,8 @@ namespace 产生式系统
                     enode_temp2 = enode_temp2.next;
                     if (enode_temp2.name == t)
                     {
+                        if (terminal)
+                            enode_temp2.terminal_node = true;
                         signal2 = true;
                         break;
                     }
@@ -150,6 +170,8 @@ namespace 产生式系统
                     enode_temp2 = enode_temp2.next;
                     enode_temp2.name = t;
                     enode_temp2.eventcount = eventcount;
+                    if (terminal)
+                        enode_temp2.terminal_node = true;
                     etail = enode_temp2;
                 }
                 rtail.name = t;
@@ -163,6 +185,7 @@ namespace 产生式系统
 
         public static bool Addrule(string t1, string t2)        //添加规则,成功添加返回true
         {
+            bool terminal = false;
             int eventcount_temp = 0;
             eventnode enode_temp = isevent_exist(t2);
             if (enode_temp == null)
@@ -174,6 +197,11 @@ namespace 产生式系统
                     etail = etail.next;
                     etail.name = t2;
                     etail.eventcount = eventcount;
+                    if (MessageBox.Show("命题\"" + t2 + "\"是否是一个具体动物？", "确认！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        etail.terminal_node = true;
+                        terminal = true;
+                    }
                 }
                 else return false;
             }
@@ -205,7 +233,8 @@ namespace 产生式系统
                         }
                         else return false;
                     }
-                    else{
+                    else
+                    {
                         anode_temp.next = new autenode();
                         anode_temp = anode_temp.next;
                         anode_temp.name = t;
@@ -236,6 +265,7 @@ namespace 产生式系统
                 anode_temp.name = t;
                 anode_temp.eventcount = enode_temp.eventcount;
             }
+
             rulecount++;
             rtail.next = new rulenode();
             rtail = rtail.next;
@@ -243,6 +273,8 @@ namespace 产生式系统
             rtail.eventcount = eventcount_temp;
             rtail.rulecount = rulecount;
             rtail.first = ahead_temp;
+            if (terminal)
+                rtail.terminal = true;
 
             DataRow row = dt.NewRow();
             row[0] = rulecount;
@@ -287,9 +319,63 @@ namespace 产生式系统
                         break;
                     }
                 }
-                sw.WriteLine(str + "->" + rnode_temp.name);
+                if (rnode_temp.terminal)
+                {
+                    sw.WriteLine("?" + str + "->" + rnode_temp.name);
+                }
+                else sw.WriteLine(str + "->" + rnode_temp.name);
             }
             sw.Close();
+        }
+
+        public static void Reasoning(eventnode event_selected_head)
+        {
+            Reasoning R_method = new Reasoning();
+            eventnode event_selected_tail = R_method.get_selected(event_selected_head);
+            for(eventnode temp=event_selected_head.next;temp!=null;temp=temp.next)
+            {
+                if(temp.terminal_node)
+                {
+                    Form2.form2.textBox1.Text = temp.name;
+                    return;
+                }
+            }
+            rule_cnode chead = new rule_cnode();
+            R_method.get_crule_list(chead);
+            //每次循环取一条规则
+            for (rule_cnode cnode_temp = chead; cnode_temp.next != null; cnode_temp = cnode_temp.next)
+            {
+                //判断规则是否成功匹配
+                if (R_method.ismatch(cnode_temp.next, event_selected_head))
+                {
+                    //判断该规则后件是否是终点节点
+                    if (R_method.isterminal(cnode_temp.next))
+                    {
+                        Form2.form2.textBox1.Text = cnode_temp.next.rule_source.name;
+                        return;
+                    }
+                    else
+
+                    {   //非终点节点，则考虑把后件加入事实库
+                        eventnode temp = event_selected_head;
+                        while (temp.next != null)
+                        {
+                            temp = temp.next;
+                            if (temp.eventcount == cnode_temp.next.rule_source.eventcount)
+                                break;
+                        }
+                        if (temp.next == null)
+                        {
+                            event_selected_tail.next = new eventnode();
+                            event_selected_tail = event_selected_tail.next;
+                            event_selected_tail.name = cnode_temp.next.rule_source.name;
+                            event_selected_tail.eventcount = cnode_temp.rule_source.eventcount;
+
+                            cnode_temp.next = cnode_temp.next.next;
+                        }
+                    }
+                }
+            }
         }
     }
 }

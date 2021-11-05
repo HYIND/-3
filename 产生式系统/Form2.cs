@@ -12,9 +12,11 @@ namespace 产生式系统
 {
     public partial class Form2 : Form
     {
+        public static Form2 form2;
         public Form2()
         {
             InitializeComponent();
+            form2 = this;
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -63,51 +65,34 @@ namespace 产生式系统
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            if (MessageBox.Show("是否确定要清空?", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                if (dataGridView1.Rows[i].Cells[0].Value == "true")
-                {
-                    bool signal_repeat = true;
-                    for (int n = 0; n < dataGridView3.Rows.Count; n++)
-                    {
-                        if (dataGridView3.Rows[n].Cells[0].Value == dataGridView1.Rows[i].Cells[1].Value)
-                            signal_repeat = false;
-                    }
-                    if (signal_repeat)
-                        dataGridView3.Rows.Add(dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value);
-                }
+                dataGridView2.Rows.Clear();
+                textBox1.Text = string.Empty;
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否确定要清空?", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                dataGridView2.Rows.Clear();
-        } 
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("是否确定要清空?", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                dataGridView3.Rows.Clear();
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
             this.Close();
         }
 
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows.Count != 0)
+            {
+                eventnode event_selected_head = new eventnode();
+                method.Reasoning(event_selected_head);
+            }
+        }
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView2.Columns[e.ColumnIndex] == Selected_Column2)
                 dataGridView2.Rows.RemoveAt(e.RowIndex);
-        }
-
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridView3.Columns[e.ColumnIndex] == Goal_Column2)
-                dataGridView3.Rows.RemoveAt(e.RowIndex);
+            textBox1.Text = string.Empty;
         }
     }
 }

@@ -67,6 +67,7 @@
     <Compile Include="method.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reasoning.cs" />
     <EmbeddedResource Include="Add_rule.resx">
       <DependentUpon>Add_rule.cs</DependentUpon>
     </EmbeddedResource>
