@@ -44,22 +44,23 @@ namespace 产生式系统
             autenode aute_temp = cnode.rule_source.first.next;
             while (aute_temp != null)
             {
+                bool exist = false;
                 for (eventnode temp = head.next; temp != null; temp = temp.next)
                 {
-                    bool exist = false;
                     if (aute_temp.eventcount == temp.eventcount)
                     {
                         exist = true;
-                        aute_temp = aute_temp.next;
+                        temp = temp.next;
                         break;
                     }
-                    if (!exist)
-                        return false;
-                    else aute_temp = aute_temp.next;
                 }
+                if (!exist)
+                    return false;
+                else aute_temp = aute_temp.next;
             }
             return true;
         }
+
 
         public bool isterminal(rule_cnode cnode)
         {

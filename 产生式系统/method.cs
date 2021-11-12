@@ -44,13 +44,13 @@ namespace 产生式系统
 {
     public class method
     {
-        public static eventnode ehead = new eventnode();
-        public static eventnode etail = ehead;
-        public static rulenode rhead = new rulenode();
-        public static rulenode rtail = rhead;
-        public static int eventcount = 0;
-        public static int rulecount = 0;
-        public static DataTable dt = new DataTable();
+        public static eventnode ehead = new eventnode();    //命题表头结点
+        public static eventnode etail = ehead;              //命题表尾结点，方便添加新命题
+        public static rulenode rhead = new rulenode();      //规则表头结点
+        public static rulenode rtail = rhead;               //规则表尾结点，方便他添加新规则
+        public static int eventcount = 0;                   //命题计数
+        public static int rulecount = 0;                    //规则计数
+        public static DataTable dt = new DataTable();       //DataTable dt 绑定到datagridview中，显示规则
 
         public static eventnode isevent_exist(string t)
         //判断命题是否已经存在，是则返回其在命题表中的位置，否则返回null
@@ -71,42 +71,52 @@ namespace 产生式系统
             else return null;
         }
 
-        public static void Init()
+        public static void Init()       //初始化函数，根据存储规则的文本建立规则表，命题表
         {
-            StreamReader sr = new StreamReader("rule_group.txt", Encoding.UTF8);
             dt.Columns.Add("规则编号", typeof(int));
             dt.Columns.Add("规则前件", typeof(string));
             dt.Columns.Add("规则后件", typeof(string));
-            while (!sr.EndOfStream)
+            //给dt添加新的列
+
+            StreamReader sr = new StreamReader("rule_group.txt", Encoding.UTF8);
+            //设置读取流，读入rule_group.txt文件
+            while (!sr.EndOfStream)     //若非文件结尾，则循环，每次循环读取一行（一条规则）
             {
                 rulecount++;
                 rtail.next = new rulenode();
                 rtail = rtail.next;
+                //规则计数+1，给规则表开辟空间接收新规则
+
                 DataRow row = dt.NewRow();
-                row[0] = rulecount;
-                string s = sr.ReadLine();
+                //给dt新增一行，用以添加新的规则
+                row[0] = rulecount;     //赋规则编号
+                string s = sr.ReadLine();   //读取文件的一行
                 int count = 0;
-                char a = s[count];
-                bool terminal = false;
-                if (a == '?')
+                char a = s[count];      //读取一个字符
+                bool terminal = false;  //标记后件是否为终点命题(即是否是目标状态)
+                if (a == '?')  
+                    //规定命题后件是如果终点则在该条规则前加一个"?"，据此可以判断是否是后件终点
                 {
                     terminal = true;
                     rtail.terminal = true;
                     count++;
                 }
                 int head = count, length = s.Length;
-                string t = null;
+                //head是截取字符串s时的截取开始位置
+                string t = null;      //t是临时字符串，截取的字符串保存在t中
                 while (++count != length)
                 {
                     if (a != '-' && a != '，' && a != ',')
+                        //读取的字符非分隔符，跳过
                         a = s[count];
-                    else
-                    {
+                    else{   
                         t = s.Substring(head, count - head - 1);
+                        //若读取到分隔符，则截取head之后的count-head-1个字符
+                        //即截取head到count-1这一段的字符
                         eventnode enode_temp1 = ehead;
                         bool signal1 = false;
                         while (enode_temp1.next != null)
-                        {
+                        {   //循环遍历截取到的字符串(即一个命题的名字)是否是已经存在的命题
                             enode_temp1 = enode_temp1.next;
                             if (enode_temp1.name == t)
                             {
@@ -114,7 +124,7 @@ namespace 产生式系统
                                 break;
                             }
                         }
-                        if (!signal1)     //新建命题节点
+                        if (!signal1)     //若该命题是一个新的命题，则新建命题节点，添加入命题表中
                         {
                             eventcount++;
                             enode_temp1.next = new eventnode();
@@ -124,17 +134,20 @@ namespace 产生式系统
                             etail = enode_temp1;
                         }
 
+                        //给该规则的前件节点添加新截取的命题
                         autenode anode_temp = rtail.first;
                         while (anode_temp.next != null)
                             anode_temp = anode_temp.next;
+
                         anode_temp.next = new autenode();
                         anode_temp = anode_temp.next;
                         anode_temp.name = t;
                         anode_temp.eventcount = enode_temp1.eventcount;
 
-                        if (a == '-')
+                        if (a == '-')      //若字符是'-'，则将读取到->，所有前件即将读取完
                         {
                             string aute_temp = string.Empty;
+                            //aute_temp字符串截取所有前件的部分形成新的字符串，用来展示规则
                             if (!terminal)
                                 aute_temp = s.Substring(0, count - 1);
                             else aute_temp = s.Substring(1, count - 2);
@@ -147,6 +160,8 @@ namespace 产生式系统
                 }
 
                 t = s.Substring(head, count - head);
+                //循环结束后head指向后件第一个字符，count指向length，
+                //因此截取的是后件的字符串，操作与前件的命题相似
                 row[2] = t;
                 dt.Rows.Add(row);
 
@@ -377,13 +392,14 @@ namespace 产生式系统
                             event_selected_tail.next = new eventnode();
                             event_selected_tail = event_selected_tail.next;
                             event_selected_tail.name = cnode_temp.next.rule_source.name;
-                            event_selected_tail.eventcount = cnode_temp.rule_source.eventcount;
+                            event_selected_tail.eventcount = cnode_temp.next.rule_source.eventcount;
 
                             cnode_temp.next = cnode_temp.next.next;
                         }
                     }
                 }
             }
+            Form2.form2.textBox1.Text = " 没有结果!";
         }
     }
 }

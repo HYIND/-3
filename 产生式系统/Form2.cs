@@ -87,6 +87,10 @@ namespace 产生式系统
                 eventnode event_selected_head = new eventnode();
                 method.Reasoning(event_selected_head);
             }
+            else
+            {
+                textBox1.Text = "未添加选项！";
+            }
         }
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
