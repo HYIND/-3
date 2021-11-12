@@ -87,8 +87,7 @@ namespace 产生式系统
                 eventnode event_selected_head = new eventnode();
                 method.Reasoning(event_selected_head);
             }
-            else
-            {
+            else{
                 textBox1.Text = "未添加选项！";
             }
         }

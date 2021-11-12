@@ -91,11 +91,13 @@ namespace 产生式系统
                 //给dt新增一行，用以添加新的规则
                 row[0] = rulecount;     //赋规则编号
                 string s = sr.ReadLine();   //读取文件的一行
+                while (s.Length == 0)       //跳过空行
+                    s = sr.ReadLine();
                 int count = 0;
                 char a = s[count];      //读取一个字符
                 bool terminal = false;  //标记后件是否为终点命题(即是否是目标状态)
-                if (a == '?')  
-                    //规定命题后件是如果终点则在该条规则前加一个"?"，据此可以判断是否是后件终点
+                if (a == '?')
+                //规定命题后件是如果终点则在该条规则前加一个"?"，据此可以判断是否是后件终点
                 {
                     terminal = true;
                     rtail.terminal = true;
@@ -109,7 +111,8 @@ namespace 产生式系统
                     if (a != '-' && a != '，' && a != ',')
                         //读取的字符非分隔符，跳过
                         a = s[count];
-                    else{   
+                    else
+                    {
                         t = s.Substring(head, count - head - 1);
                         //若读取到分隔符，则截取head之后的count-head-1个字符
                         //即截取head到count-1这一段的字符
@@ -200,11 +203,11 @@ namespace 产生式系统
 
         public static bool Addrule(string t1, string t2)        //添加规则,成功添加返回true
         {
-            bool terminal = false;
-            int eventcount_temp = 0;
-            eventnode enode_temp = isevent_exist(t2);
+            bool terminal = false;      //判断该规则的后件是否为终点节点（具体动物）
+            int eventcount_temp = 0;    //临时存储后件的命题编号
+            eventnode enode_temp = isevent_exist(t2);   //检查命题库中是否有名字为t2的命题，
 
-            if (enode_temp == null)
+            if (enode_temp == null)     //为空则表示这是个新命题，须在命题库中添加新命题
             {
                 if (MessageBox.Show("后件\"" + t2 + "\"不在命题库中，是否要添加新的命题?", "出了一点小问题！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
@@ -213,6 +216,7 @@ namespace 产生式系统
                     etail = etail.next;
                     etail.name = t2;
                     etail.eventcount = eventcount;
+                    eventcount_temp = eventcount;
                     if (MessageBox.Show("命题\"" + t2 + "\"是否是一个具体动物？", "确认！", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                     {
                         etail.terminal_node = true;
@@ -222,14 +226,16 @@ namespace 产生式系统
                 else return false;
             }
             else
-            {
+            {   //非空则表示该命题是已经存在命题库中的，直接读取该命题的终点信息和编号
                 terminal = enode_temp.terminal_node;
                 eventcount_temp = enode_temp.eventcount;
             }
 
 
-            autenode ahead_temp = new autenode();
-            autenode anode_temp = ahead_temp;
+            autenode ahead_temp = new autenode();   //前件链表的头节点，待链表构建完毕后直接将头结点插入规则中
+            autenode anode_temp = ahead_temp;       //临时节点，用于构建链表
+
+            //与初始化函数中的原理类似，读取字符串t1，然后根据规则构建前件链表
             int count = 0;
             int head = 0, length = t1.Length;
             char a = t1[count];
@@ -265,6 +271,9 @@ namespace 产生式系统
                     a = t1[count];
                 }
             }
+
+            //while运行完毕后，count指向字符串长度length最后一个字符，head指向前一个前件的末尾
+            //即最后一个前件还没有读取到（因为读取前件是以分界符','为准，而最后一个前件后不接','，因此需要额外对最后一个前件处理
             t = t1.Substring(head, count - head);
             enode_temp = isevent_exist(t);
             if (enode_temp == null)
@@ -287,29 +296,25 @@ namespace 产生式系统
                 anode_temp.eventcount = enode_temp.eventcount;
             }
 
+            //前件、后件都处理完毕后，新建规则节点
             rulecount++;
             rtail.next = new rulenode();
             rtail = rtail.next;
-            rtail.name = t2;
-            rtail.eventcount = eventcount_temp;
-            rtail.rulecount = rulecount;
-            rtail.first = ahead_temp;
-            rtail.terminal = terminal;
+            rtail.name = t2;    //后件名
+            rtail.eventcount = eventcount_temp;     //后件编号
+            rtail.rulecount = rulecount;            //规则编号
+            rtail.first = ahead_temp;               //前件链表
+            rtail.terminal = terminal;              //终点标记
 
-            DataRow row = dt.NewRow();
+            DataRow row = dt.NewRow();              //在DataTable dt中添加新行
             row[0] = rulecount;
             row[1] = t1;
             row[2] = t2;
             dt.Rows.Add(row);
 
-
-            //StreamReader sr = new StreamReader("rule_group.txt");
-            //string sr_temp = string.Empty;
-            //while (!sr.EndOfStream)
-            //    sr_temp = sr.ReadLine();
-            //sr.Close();
-
+            //在数据文件中写入新的规则
             StreamWriter sw = new StreamWriter("rule_group.txt", true);
+            sw.WriteLine();     //跳一行，防止当前光标位于最后一条规则那一行
             if (!terminal)
                 sw.WriteLine(t1 + "->" + t2);
             else sw.WriteLine("?" + t1 + "->" + t2);
@@ -321,9 +326,9 @@ namespace 产生式系统
 
         public static void RewriteFile()       //在删除规则后，对txt文件重写
         {
-            StreamWriter sw = new StreamWriter("rule_group.txt", false);//saOrAp表示覆盖或者是追加  
+            StreamWriter sw = new StreamWriter("rule_group.txt", false);    //false表示覆盖,即重写文件
             rulenode rnode_temp = rhead;
-            while (rnode_temp.next != null)
+            while (rnode_temp.next != null)     //循环读取规则，重写文件
             {
                 string str = string.Empty;
                 rnode_temp = rnode_temp.next;
@@ -343,18 +348,17 @@ namespace 产生式系统
                     }
                 }
                 if (rnode_temp.terminal)
-                {
                     sw.WriteLine("?" + str + "->" + rnode_temp.name);
-                }
                 else sw.WriteLine(str + "->" + rnode_temp.name);
             }
             sw.Close();
         }
 
-        public static void Reasoning(eventnode event_selected_head)
+        public static void Reasoning(eventnode event_selected_head)     //推理函数
         {
-            Reasoning R_method = new Reasoning();
-            eventnode event_selected_tail = R_method.get_selected(event_selected_head);
+            Reasoning R_method = new Reasoning();       //调用Reasoning类中的推理方法
+            eventnode event_selected_tail = R_method.get_selected(event_selected_head);     
+            //返回根据窗口中所选规则而构建的一条已选命题链表表尾
             for (eventnode temp = event_selected_head.next; temp != null; temp = temp.next)
             {
                 if (temp.terminal_node)
@@ -371,18 +375,17 @@ namespace 产生式系统
                 //判断规则是否成功匹配
                 if (R_method.ismatch(cnode_temp.next, event_selected_head))
                 {
-                    //判断该规则后件是否是终点节点
-                    if (R_method.isterminal(cnode_temp.next))
+                    if (cnode_temp.next.rule_source.terminal) //判断该规则后件是否是终点节点
                     {
+                        //是则输出该节点，推理成功
                         Form2.form2.textBox1.Text = cnode_temp.next.rule_source.name;
                         return;
                     }
                     else
-
-                    {   //非终点节点，则考虑把后件加入事实库
+                    {   //非终点节点，则考虑把后件加入事实库中
                         eventnode temp = event_selected_head;
                         while (temp.next != null)
-                        {
+                        {   //查询该后件是否已经存在事实库，存在则不再重复添加
                             temp = temp.next;
                             if (temp.eventcount == cnode_temp.next.rule_source.eventcount)
                                 break;
