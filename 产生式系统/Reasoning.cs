@@ -61,21 +61,5 @@ namespace 产生式系统
             }
             return true;
         }
-
-
-        public bool isterminal(rule_cnode cnode)       //查询
-        {
-            int i = cnode.rule_source.eventcount;
-            for (eventnode temp = method.ehead.next; temp != null; temp = temp.next)
-            {
-                if (temp.eventcount == i)
-                {
-                    if (temp.terminal_node)
-                        return true;
-                    else return false;
-                }
-            }
-            return false;
-        }
     }
 }
