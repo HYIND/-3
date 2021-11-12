@@ -53,13 +53,13 @@ namespace 产生式系统
             {
                 if (dataGridView1.Rows[i].Cells[0].Value == "true")
                 {
-                    bool signal_repeat = true;
+                    bool signal_repeat = false;
                     for (int n = 0; n < dataGridView2.Rows.Count; n++)
                     {
                         if (dataGridView2.Rows[n].Cells[0].Value == dataGridView1.Rows[i].Cells[1].Value)
-                            signal_repeat = false;
+                            signal_repeat = true;
                     }
-                    if (signal_repeat)
+                    if (!signal_repeat)
                         dataGridView2.Rows.Add(dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value);
                 }
             }
