@@ -15,7 +15,6 @@ public class eventnode  //表示单个命题，可能是规则中的前件，也
     public eventnode next = null;//下一个命题
 }
 
-
 public class autenode   //前件节点，表示规则中的前件中的一项
 {
     public string name = null; //命题名
@@ -96,6 +95,7 @@ namespace 产生式系统
                 int count = 0;
                 char a = s[count];      //读取一个字符
                 bool terminal = false;  //标记后件是否为终点命题(即是否是目标状态)
+                eventnode enode_temp = null;
                 if (a == '?')
                 //规定命题后件是如果终点则在该条规则前加一个"?"，据此可以判断是否是后件终点
                 {
@@ -116,25 +116,15 @@ namespace 产生式系统
                         t = s.Substring(head, count - head - 1);
                         //若读取到分隔符，则截取head之后的count-head-1个字符
                         //即截取head到count-1这一段的字符
-                        eventnode enode_temp1 = ehead;
-                        bool signal1 = false;
-                        while (enode_temp1.next != null)
-                        {   //循环遍历截取到的字符串(即一个命题的名字)是否是已经存在的命题
-                            enode_temp1 = enode_temp1.next;
-                            if (enode_temp1.name == t)
-                            {
-                                signal1 = true;
-                                break;
-                            }
-                        }
-                        if (!signal1)     //若该命题是一个新的命题，则新建命题节点，添加入命题表中
+                        enode_temp = isevent_exist(t);
+                        if (enode_temp == null)     //若该命题是一个新的命题，则新建命题节点，添加入命题表中
                         {
                             eventcount++;
-                            enode_temp1.next = new eventnode();
-                            enode_temp1 = enode_temp1.next;
-                            enode_temp1.name = t;
-                            enode_temp1.eventcount = eventcount;
-                            etail = enode_temp1;
+                            etail.next = new eventnode();
+                            etail = etail.next;
+                            etail.name = t;
+                            etail.eventcount = eventcount;
+                            enode_temp = etail;
                         }
 
                         //给该规则的前件节点添加新截取的命题
@@ -145,7 +135,7 @@ namespace 产生式系统
                         anode_temp.next = new autenode();
                         anode_temp = anode_temp.next;
                         anode_temp.name = t;
-                        anode_temp.eventcount = enode_temp1.eventcount;
+                        anode_temp.eventcount = enode_temp.eventcount;
 
                         if (a == '-')      //若字符是'-'，则将读取到->，所有前件即将读取完
                         {
@@ -168,32 +158,23 @@ namespace 产生式系统
                 row[2] = t;
                 dt.Rows.Add(row);
 
-                eventnode enode_temp2 = ehead;
-                bool signal2 = false;
-                while (enode_temp2.next != null)
-                {
-                    enode_temp2 = enode_temp2.next;
-                    if (enode_temp2.name == t)
-                    {
-                        if (terminal)
-                            enode_temp2.terminal_node = true;
-                        signal2 = true;
-                        break;
-                    }
-                }
-                if (!signal2)     //新建事件节点
+
+                enode_temp = isevent_exist(t);
+                if (enode_temp == null)     //若该命题是一个新的命题，则新建命题节点，添加入命题表中
                 {
                     eventcount++;
-                    enode_temp2.next = new eventnode();
-                    enode_temp2 = enode_temp2.next;
-                    enode_temp2.name = t;
-                    enode_temp2.eventcount = eventcount;
+                    etail.next = new eventnode();
+                    etail = etail.next;
+                    etail.name = t;
+                    etail.eventcount = eventcount;
                     if (terminal)
-                        enode_temp2.terminal_node = true;
-                    etail = enode_temp2;
+                        etail.terminal_node = true;
+                    enode_temp = etail;
                 }
+                else if (terminal)
+                        enode_temp.terminal_node = true;
                 rtail.name = t;
-                rtail.eventcount = enode_temp2.eventcount;
+                rtail.eventcount = enode_temp.eventcount;
                 rtail.rulecount = rulecount;
             }
             sr.Close();
@@ -357,7 +338,7 @@ namespace 产生式系统
         public static void Reasoning(eventnode event_selected_head)     //推理函数
         {
             Reasoning R_method = new Reasoning();       //调用Reasoning类中的推理方法
-            eventnode event_selected_tail = R_method.get_selected(event_selected_head);     
+            eventnode event_selected_tail = R_method.get_selected(event_selected_head);
             //返回根据窗口中所选规则而构建的一条已选命题链表表尾
             for (eventnode temp = event_selected_head.next; temp != null; temp = temp.next)
             {
