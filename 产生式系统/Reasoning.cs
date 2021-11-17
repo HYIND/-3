@@ -22,7 +22,7 @@ namespace 产生式系统
         }
 
         public eventnode get_selected(eventnode event_selected_head)    
-            //传入参数为已选规则链表表头，该方法用于根据已选规则构建一条链表
+            //传入参数为已选命题链表表头，该方法用于根据已选命题构建一条链表
         {
             eventnode temp = event_selected_head;
             for (int i = 0; i < Form2.form2.dataGridView2.Rows.Count; i++)  //逐行读取已选列表中的第一列（编号）

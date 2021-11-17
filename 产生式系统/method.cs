@@ -14,14 +14,12 @@ public class eventnode  //表示单个命题，可能是规则中的前件，也
     public bool terminal_node = false; //判断是否是终点节点(即该节点已经没有后件)
     public eventnode next = null;//下一个命题
 }
-
 public class autenode   //前件节点，表示规则中的前件中的一项
 {
     public string name = null; //命题名
     public int eventcount;     //该命题的编号
     public autenode next = null;      //同规则中前件的下一项
 }
-
 public class rulenode   //单条规则
 {
     public string name = null;      //后件名
@@ -31,7 +29,6 @@ public class rulenode   //单条规则
     public rulenode next = null;    //下一条规则
     public autenode first = new autenode();     //该规则中的前件链表表头
 }
-
 public class rule_cnode
 //推理中用到的，c指copy,是对源规则的位置进行拷贝，据此建立规则库的open表/close表
 {
